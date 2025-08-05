@@ -70,3 +70,109 @@ A proposta é mostrar alguns itens relacionados a prática de Testes Manuais Fun
 **QUANDO** o usuário clicar em "Avisar quando disponível" em um produto esgotado  
 **ENTÃO** o sistema deve registrar a solicitação e enviar um e-mail quando o estoque for atualizado para esse produto
 
+
+---
+
+# Casos de Teste
+
+
+---
+
+## ✅ Técnica: Step-by-Step
+
+### 🧪 Caso de Teste 1 – Aplicação de Filtro por Categoria e Faixa de Preço
+
+**Identificação:** CT001 – Aplicar filtros de categoria e faixa de preço  
+**Objetivo:** Verificar se o sistema retorna corretamente os produtos com base nos filtros aplicados pelo usuário.  
+
+**Pré-condições:**
+- O usuário está na página de listagem de produtos.
+- O sistema possui produtos cadastrados em múltiplas categorias e faixas de preço.
+
+**Dados de Teste:**
+- Categoria: “Placas de Vídeo”
+- Faixa de preço: R$1000 a R$2000
+
+**Passos:**
+
+| Passo | Ação do Usuário                                       | Resultado Esperado                                      |
+|------:|--------------------------------------------------------|----------------------------------------------------------|
+| 1     | Acessar a loja virtual                                 | Página principal da loja é carregada                    |
+| 2     | Navegar até a seção de produtos                        | Página de listagem de produtos é exibida                |
+| 3     | Selecionar a categoria “Placas de Vídeo”               | Somente produtos dessa categoria são listados           |
+| 4     | Definir a faixa de preço de R$1000 a R$2000            | Lista de produtos é atualizada com base nos filtros     |
+| 5     | Verificar os produtos exibidos                         | Todos os produtos exibidos pertencem à categoria e faixa definida |
+
+**Critério de Sucesso:**  
+Todos os produtos exibidos após a aplicação dos filtros estão corretos conforme os parâmetros definidos.
+
+---
+
+### 🧪 Caso de Teste 2 – Notificação por E-mail de Produto Indisponível
+
+**Identificação:** CT002 – Solicitar notificação de produto indisponível  
+**Objetivo:** Verificar se a funcionalidade de solicitação de notificação por e-mail funciona corretamente quando um produto está fora de estoque.
+
+**Pré-condições:**
+- O usuário está logado.
+- Existe ao menos um produto marcado como “Indisponível”.
+- O e-mail do usuário está confirmado no sistema.
+
+**Dados de Teste:**
+- Produto: “Teclado Mecânico XYZ”
+- E-mail: usuario@exemplo.com
+
+**Passos:**
+
+| Passo | Ação do Usuário                                                       | Resultado Esperado                                               |
+|------:|------------------------------------------------------------------------|------------------------------------------------------------------|
+| 1     | Logar na conta da loja virtual                                         | Usuário autenticado com sucesso                                 |
+| 2     | Acessar a página do produto “Teclado Mecânico XYZ”                    | Página do produto é carregada com status "Indisponível"         |
+| 3     | Clicar no botão “Avisar quando disponível”                            | Sistema confirma solicitação e exibe mensagem de confirmação     |
+| 4     | Aguardar a reposição do produto no sistema (estoque > 0)             | Produto é atualizado para “Disponível”                          |
+| 5     | Verificar a caixa de entrada do e-mail cadastrado                    | E-mail de notificação é recebido informando a disponibilidade   |
+
+**Critério de Sucesso:**  
+Usuário recebe e-mail assim que o produto volta ao estoque.
+
+---
+
+## ✅ Técnica: BDD (Behavior-Driven Development)
+
+### 🧪 Caso de Teste BDD 1 – Finalizar Compra com Produto em Estoque
+
+```gherkin
+Funcionalidade: Finalização de compra
+
+  Como cliente da loja virtual
+  Quero poder finalizar uma compra com sucesso
+  Para que eu possa receber meus produtos em casa
+
+  Cenário: Finalizar pedido com item em estoque
+    Dado que o cliente está logado na loja
+    E adicionou um produto disponível ao carrinho
+    Quando acessar o carrinho e clicar em “Finalizar Compra”
+    E preencher os dados de entrega e pagamento válidos
+    Então o sistema deve concluir o pedido
+    E exibir a mensagem “Compra realizada com sucesso”
+```
+
+---
+
+### 🧪 Caso de Teste BDD 2 – Falha no Login por Senha Incorreta
+
+```gherkin
+Funcionalidade: Autenticação de usuário
+
+  Como usuário registrado
+  Quero ser impedido de acessar o sistema com senha errada
+  Para garantir a segurança da minha conta
+
+  Cenário: Tentativa de login com senha incorreta
+    Dado que o usuário acessa a tela de login
+    E informa o e-mail registrado "cliente@exemplo.com"
+    E digita a senha incorreta "senha123"
+    Quando clicar no botão “Entrar”
+    Então o sistema deve exibir a mensagem “Usuário ou senha inválidos”
+    E o login não deve ser realizado
+```
